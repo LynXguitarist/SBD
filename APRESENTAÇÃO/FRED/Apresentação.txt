@@ -1,0 +1,11 @@
+Ao correr uma query, SQL Server faz cache de alguma informação 
+
+Ao criar as tabelas gera logo um clustered index para o id e um nonclustered para unique values - falar de cada tabela
+
+Testar tudo e no final o Ornelas ou simoes fazer query sobre uma heap(tirar indices de uma das tabelas)
+
+Query planner - o com o certo pode ser util para perceber o que se está a passar live com uma query
+
+clustered Column store nao podem ser criadas em tabelas com foreign keys 
+
+mostrar included columns e explicar pros e cons
