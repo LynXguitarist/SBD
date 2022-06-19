@@ -1,11 +1,33 @@
-Ao correr uma query, SQL Server faz cache de alguma informação 
+- Ao criar as tabelas gera logo um clustered index para o id e um nonclustered para unique values
 
-Ao criar as tabelas gera logo um clustered index para o id e um nonclustered para unique values - falar de cada tabela
+- Overview dos indexes, falar de partioning, filegroups ou 1, 1 file ou vários se usar algoritmo proportional fill -> enche espaços vazios proporcionalmente por ficheiros
 
-Testar tudo e no final o Ornelas ou simoes fazer query sobre uma heap(tirar indices de uma das tabelas)
+- mostrar included columns e explicar pros e cons
 
-Query planner - o com o certo pode ser util para perceber o que se está a passar live com uma query
+- full text - nao pode ser usado ate o index estar totalmente populado
+	- full population(default)
+	- manual/automatic based on change tracking 
+		- tabela que gere as mudanças
+	- incremental population based on timestamp
+		- necessário ter uma coluna timestamp
 
-clustered Column store nao podem ser criadas em tabelas com foreign keys 
+- bw-Tree
+	- parecido a B-Tree, é um mapa de páginas organizadas por Id de pagina, um recurso para alocar e reutilizar ids da pagina e um conjunto de paginas
+	- necessário para manter
+		- Delta consolidation - quando é adicionado um registo a uma página cheia, é criada uma nova pagina com o mesmo id, mas um endereço de memoria diferente
+		- split pages - é o mesmo que temos nas B-Trees, na inserção de uma nova página
+		- merge page - éo mesmo quando uma pagina é apagada, junta-se na mesma node
 
-mostrar included columns e explicar pros e cons
+- Columnstore nao podem ser criadas em tabelas com foreign keys
+	- dados são guardados em formato colunas, ao contrário de B-Trees que é por linhas
+	- deltastore é um uma lista de espera de rowgroups demasiado pequenas para serem compactadas nua columnstore, cada rowgroup é um indice clustered B+-Tree
+
+
+
+
+
+
+---- PERGUNTAS ------
+- O SQL Server permite o particionamento de tabelas e índices? Em diferentes ficheiros, filegroups ou ambos? Resposta:
+dif filegroups ou files usando o proportional fill algoritmo -> enche espaços vazios proporcionalmente por ficheiros
+
